@@ -1,9 +1,11 @@
+#Question1
 nums=list(range(30,65,5))
 print(nums)
-print(nums[::-1]
+print(nums[::-1])
 nums.append(65)
 print(nums[::-1])
 
+#Question2
 list=[]
 print(list)
 list.append(0)
@@ -28,17 +30,17 @@ list.append(18)
 list.append(19)
 list.append(20)
 print(list)
-list.remove('0')
+list.remove(0)
 print(list)
 print(len(list))
 print(max(list))
 print(min((list)
-sum=list(range(-,20)
+sum(list)
+print(sum(list))
 
-
-weather={Sunny:play,
-        Rainy:watch_TV,
-        Cloudy:walk}
-        print(type(days))
-        print(days)
-        
+#Question3
+weatherdictionary={'Sunny':'play','Rainy':'watch_TV','Cloudy':'walk'}
+        for key, value in weatherdictionary.items():
+        print('When',key,'let_us',value)
+      weatherdictionary.update({'Snowy':'ski'})
+      print(weatherdictionary)
