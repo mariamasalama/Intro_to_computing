@@ -2,7 +2,7 @@ nums=list(range(30,65,5))
 print(nums)
 print(nums[::-1]
 nums.append(65)
-print(nums)
+print(nums[::-1])
 
 list=[]
 print(list)
