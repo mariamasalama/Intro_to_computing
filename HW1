@@ -1,0 +1,22 @@
+nums=list(range(30,65,5))
+print(nums)
+print(nums[::-1]
+nums.append('65')
+print(nums)
+
+nums=list(range(0,20)
+print(nums)
+nums.remove('0')
+print(nums)
+print(len(nums))
+print(max(nums))
+print(min((nums)
+sum=list(range(-,20)
+
+
+weather={Sunny:play,
+        Rainy:watch_TV,
+        Cloudy:walk}
+        print(type(days))
+        print(days)
+        
