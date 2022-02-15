@@ -1,0 +1,97 @@
+marks = {'Andy':88, 'Amy':66, 'James':90, 'Jules':55, 'Arthur':77} 
+
+def q1_1 (name):
+    grade = marks.get(name)
+    if grade is None: 
+        print("Cannot find this student's name:", name)
+    else: 
+        return grade
+
+def q1_2():
+    grades = 0
+    students = 0
+    for m in marks:
+        grades += marks[m]
+        students += 1
+    return grades/students
+
+def q2(num):
+    n = 1
+    while True:
+        if n > num: 
+            print('grater than', num)
+            break
+        print(n, n*n)
+        n += 1
+
+def q3(num):
+    total = 0
+    i = 0
+    while i < num:
+        i += 1
+        total += i
+    print(total)
+
+def q4(num):
+    total = 0
+    for i in range(1, num+1):
+        total += i
+        print(total)
+
+import statistics
+def q5(nums):
+    print("Mean:", statistics.mean(nums))
+    print("Sum:", sum(nums))
+    print("Standard Deviation:", statistics.stdev(nums))
+
+def q6_1(v1, v2, v3, v4):
+    m = v1
+    if m > v2: m=v2
+    if m > v3: m=v3
+    if m > v4: m=v4
+    return m
+
+def print_minimal():
+    x = q6_1(4,3,1,2)
+    print ('Smallest:', x ) # print minmal number
+
+
+# Test Calls to functions
+if __name__ == '__main__':
+    
+    print()
+
+    # q1
+    x = q1_1('Amy')         # will return 66
+    print(x)
+    x = q1_1('Bliss')       # print cannot find message
+    print()
+
+    # q1_2
+    x = q1_2()              # will return average grade
+    print()
+
+    # q2
+    x = q2(8)               # print n and square of n
+    print()
+    
+    # q3
+    x = q3(5)               # print sum of all integers <= 5 = 15
+    print()
+
+    # q4
+    x = q4(5)               # print sum of all integers <= 5 at each step
+    print()
+    
+    # q5
+    q5(range(1,100))        # print mean, sum, standard deviation of a list
+    print()
+
+    # q6_1
+    x = q6_1(4,3,1,2)
+    print ('Smallest:', x ) # print minimal number
+    print()
+
+    # q6_2
+    print_minimal()         #print minimal number
+    print()
