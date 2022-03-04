@@ -1,0 +1,128 @@
+#question1
+from turtle import end_fill
+import numpy as np
+
+# create the array
+arr = np.arange(1,13).reshape(3,4)
+
+# multiply by 2
+arr2 = np.multiply(arr, 2)
+
+# print the dimesion and shpae of the resultant array 
+print (np.ndim(arr2), arr2.shape)
+
+# use nested for loops to print 2-D array
+for x in arr:
+    for y in x:
+        print(y, end = ' ')
+    print()
+
+# use flat method to print 2-D array
+for x in arr.flatten():
+    print(x, end = ' ')
+   
+#question2
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.arange(1,7)
+y = np.arange(5,11)
+
+# plot line using x, y arrays
+plt.plot(x,y)
+plt.show()
+
+# draw line on a diagram using points
+points = [(3,2), (6,8), (9,1), (12,10)]
+x = [p[0] for p in points]
+y = [p[1] for p in points]
+plt.plot(x,y, marker = "D")
+plt.show()
+
+#question3
+import numpy as np
+import matplotlib.pyplot as plt
+
+# plot 6 points 
+points = [(0,2), (1,4), (2,6), (3,14), (4,10), (5,12)]
+x = [p[0] for p in points]
+y = [p[1] for p in points]
+plt.plot(x,y, '--r', marker = 'D', ms = 10, mec='g', mfc='g')
+plt.show()
+
+#question4
+import matplotlib.pyplot as plt
+
+# plot multiple lines 
+a = [1,5]
+b = [5,9]
+c = [9,13]
+
+plt.plot(a, '-b')
+plt.plot(b, '-r')
+plt.plot(c, '-g')
+plt.show()
+
+#question5
+import matplotlib.pyplot as plt
+
+marks = {'Andy':88, 'Amy':66, 'James':90, 'Jules':55, 'Arthur':77}
+
+x, y = zip(*marks.items())
+plt.bar(x, y )
+plt.title("Students' Marks")
+plt.show()
+plt.title("Students' Marks")
+plt.pie(y, labels=x)
+plt.legend()
+plt.show()
+
+#question6
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+plt.subplot(2,3,1)
+plt.title('Simple Line')
+x = np.arange(1,7)
+y = np.arange(5,11)
+plt.grid(color = 'green', linestyle = '--', linewidth = 0.5)
+plt.plot(x,y)
+
+plt.subplot(2,3,2)
+plt.title('Scatter Plot')
+points = [(3,2), (6,8), (9,1), (12,10)]
+x = [p[0] for p in points]
+y = [p[1] for p in points]
+plt.scatter(x,y, marker = "D")
+
+
+
+plt.subplot(2,3,3)
+plt.title('Histogram')
+x = np.random.normal(170, 10, 250)
+plt.hist(x)
+
+plt.subplot(2,3,4)
+plt.title('Multiple Lines')
+a = [1,5]
+b = [5,9]
+c = [9,13]
+plt.plot(a, '-b')
+plt.plot(b, '-r')
+plt.plot(c, '-g')
+
+
+marks = {'Andy':88, 'Amy':66, 'James':90, 'Jules':55, 'Arthur':77}
+x, y = zip(*marks.items())
+
+plt.subplot(2,3,5)
+plt.title("Students' Marks")
+plt.bar(x, y )
+
+plt.subplot(2,3,6)
+plt.title("Students' Marks")
+plt.pie(y, labels=x)
+
+
+plt.show()
