@@ -1,0 +1,118 @@
+#Question1
+import matplotlib.pyplot as plt
+import json
+
+# create empty list to read numbers from file
+nums = []
+
+# open the numbers.txt file for reading
+with open('numbers.txt', 'r') as inFile:
+    # read all lines
+    lines = inFile.readlines()
+    for line in lines:
+        # for each line, split comma separated values
+        # and convert them to integers 
+        nums += [int(x) for x in line.strip().split(',')]
+
+# create empty dictionary to hold number frequencies
+freq = {}
+for i in range(10):
+    # for each number between 0 and 9, 
+    # count the occurances and add to the dictionary 
+    freq[i] = nums.count(i)
+
+# dump dictionary to file as json
+with open("frquencies.json", "w") as outFile:
+    json.dump(freq, outFile, indent = 4) 
+
+# set plot title 
+plt.title('Histogram of Number Frequencies')
+
+# prepare frequency data for histrogram chart
+freq_list = [key for key, val in freq.items() for _ in range(val)]
+
+# plot the data as histogram
+plt.hist(freq_list)
+
+# display plot
+plt.show()
+
+#Question2
+import pandas as pd
+import matplotlib.pyplot as plt
+from matplotlib.gridspec import GridSpec
+
+# read the csv data file
+df = pd.read_csv('netflix_sample-data.csv')
+
+# convert start time to datetime and adjust the time zone
+df['Start Time'] = pd.to_datetime(df['Start Time'], utc=True).dt.tz_convert('US/Eastern')
+
+# convert duration column to time delata
+df['Duration'] = pd.to_timedelta(df['Duration'])
+
+# filter out data with less then a minute watch
+df = df[(df['Duration'] > '0 days 00:01:00')]
+
+# calculate a clean season name, remove episodes etc
+df['Season'] = df['Title'].map(lambda x: x.split(':')[0])
+
+# calculate weekday from start time
+df['weekday'] = df['Start Time'].dt.weekday
+
+# calculate hour of the day from start time
+df['hour'] = df['Start Time'].dt.hour
+
+
+# setup plot figure and grid spec layout for plot
+fig = plt.figure(constrained_layout=True)
+gs = GridSpec(2, 2, figure=fig)
+
+# super title
+plt.suptitle("MY NetFlix Usage Statistics")
+
+''' -- PLOT 1: Season wise Duration -- '''
+# calculate season wise duration
+df_season = df.groupby('Season')['Duration'].sum()
+# setup 2 column wide subplot 
+plt.subplot(gs.new_subplotspec((0, 0), colspan=2))
+# plot
+df_season.plot(figsize=(12,7), title='Most Watched Season')
+
+''' -- PLOT 2: Weekday wise Watch Count -- '''
+df_weekday = df.copy()
+
+# set our categorical and define the order so the days are plotted Monday-Sunday
+df_weekday['weekday'] = pd.Categorical(df['weekday'], categories=
+    [0,1,2,3,4,5,6], ordered=True)
+
+# create df_weekday_count and count the rows for each weekday, assigning the result to that variable
+df_weekday_count = df_weekday['weekday'].value_counts()
+df_weekday_count = df_weekday_count.sort_index()
+
+# setup subplot 
+plt.subplot(gs.new_subplotspec((1, 0)))
+
+# plot bar chart
+df_weekday_count.plot(kind='bar', figsize=(12,7), title='Weekday Watch Counts')
+
+
+''' -- PLOT 2: Weekday wise Watch Count -- '''
+df_hourly = df.copy()
+
+# set our categorical and define the order so the hours of the day are plotted
+df_hourly['hour'] = pd.Categorical(df['hour'], categories=
+    [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23], ordered=True)
+
+# create df_hourly_count and count the rows for each weekday, assigning the result to that variable
+df_hourly_count = df_hourly['hour'].value_counts()
+df_hourly_count = df_hourly_count.sort_index()
+
+# setup subplot 
+plt.subplot(gs.new_subplotspec((1, 1)))
+
+# plot bar chart
+df_hourly_count.plot(kind='bar', figsize=(12,7), title='Hourly Watch Counts')
+
+# show plot
+plt.show()
