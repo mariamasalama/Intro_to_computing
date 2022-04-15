@@ -20,7 +20,7 @@ t.shape("turtle")
 
 # flag height to width ratio is 1:1.9
 flag_height = 337
-flag_width = 640
+flag_length = 640
 
 # starting points
 # start from the first quardant, half of flag width and half of flag height
@@ -29,22 +29,21 @@ start_y = 320
 
 # For red and white stripes (total 13 stripes in flag), each strip width will be flag_height/13 = 19.2 approx
 stripe_height = flag_height/13
-stripe_width = flag_width
+stripe_length = flag_length
 
 # length of one arm of star
 star_size = 10
 
 
-def draw_rectangle(x, y, height, width, color):
-    t.goto(x,y)
+def draw_rectangle(length, height, color):
     t.pendown()
     t.color(color)
     t.begin_fill()
-    t.forward(width)
+    t.forward(length)
     t.right(90)
     t.forward(height)
     t.right(90)
-    t.forward(width)
+    t.forward(length)
     t.right(90)
     t.forward(height)
     t.right(90)
@@ -74,12 +73,14 @@ def draw_stripes():
     # so we first create, 6 red and 6 white stripes alternatively
     for stripe in range(0,6):
         for color in ["red", "white"]:
-            draw_rectangle(x, y, stripe_height, stripe_width, color)
+            t.goto(x,y)
+            draw_rectangle(stripe_length, stripe_height, color)
             # decrease value of y by stripe_height
             y = y - stripe_height
 
     # create last red stripe
-    draw_rectangle(x, y, stripe_height, stripe_width, 'red')
+    t.goto(x,y)
+    draw_rectangle(stripe_length, stripe_height, 'red')
     y = y - stripe_height
 
 
@@ -89,8 +90,9 @@ def draw_stripes():
 # check references section for these values
 def draw_square():
     square_height = (7/13) * flag_height
-    square_width = (0.76) * flag_height
-    draw_rectangle(start_x, start_y, square_height, square_width, 'navy')
+    square_length = (0.76) * flag_height
+    t.goto(start_x, start_y) 
+    draw_rectangle(square_length, square_height, 'navy')
 
 
 def draw_six_stars_rows():
