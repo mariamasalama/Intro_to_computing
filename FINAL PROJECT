@@ -20,30 +20,31 @@ t.shape("turtle")
 
 # flag height to width ratio is 1:1.9
 flag_height = 337
-flag_length = 640
+flag_width = 640
 
 # starting points
 # start from the first quardant, half of flag width and half of flag height
 start_x = -168
 start_y = 320
 
-# For red and white stripes (total 13 stripes in flag), each strip width will be flag_height/13 = 19.2 approx
+# For red and white stripes (total 13 stripes in flag), each strip width will be flag_height/13 = 25.92 approx
 stripe_height = flag_height/13
-stripe_length = flag_length
+stripe_width = flag_width
 
 # length of one arm of star
 star_size = 10
 
 
-def draw_rectangle(length, height, color):
+def draw_rectangle(x, y, height, width, color):
+    t.goto(x,y)
     t.pendown()
     t.color(color)
     t.begin_fill()
-    t.forward(length)
+    t.forward(width)
     t.right(90)
     t.forward(height)
     t.right(90)
-    t.forward(length)
+    t.forward(width)
     t.right(90)
     t.forward(height)
     t.right(90)
@@ -73,14 +74,12 @@ def draw_stripes():
     # so we first create, 6 red and 6 white stripes alternatively
     for stripe in range(0,6):
         for color in ["red", "white"]:
-            t.goto(x,y)
-            draw_rectangle(stripe_length, stripe_height, color)
+            draw_rectangle(x, y, stripe_height, stripe_width, color)
             # decrease value of y by stripe_height
             y = y - stripe_height
 
     # create last red stripe
-    t.goto(x,y)
-    draw_rectangle(stripe_length, stripe_height, 'red')
+    draw_rectangle(x, y, stripe_height, stripe_width, 'red')
     y = y - stripe_height
 
 
@@ -90,18 +89,17 @@ def draw_stripes():
 # check references section for these values
 def draw_square():
     square_height = (7/13) * flag_height
-    square_length = (0.76) * flag_height
-    t.goto(start_x, start_y) 
-    draw_rectangle(square_length, square_height, 'navy')
+    square_width = (0.76) * flag_height
+    draw_rectangle(start_x, start_y, square_height, square_width, 'navy')
 
 
 def draw_six_stars_rows():
-    gap_between_stars = 30
-    gap_between_lines = stripe_height + 6
-    y = 112
+    gap_between_stars = 40
+    gap_between_lines = stripe_height + 10
+    y = 303
     # create 5 rows of stars
     for row in range(0,5) :
-        x = -80
+        x = -145
         # create 6 stars in each row
         for star in range (0,6) :
             draw_star(x, y, 'white', star_size)
@@ -110,12 +108,12 @@ def draw_six_stars_rows():
 
 
 def draw_five_stars_rows():
-    gap_between_stars = 30
-    gap_between_lines = stripe_height + 6
-    y = 100
+    gap_between_stars = 40
+    gap_between_lines = stripe_height + 10
+    y = 288
     # create 4 rows of stars
     for row in range(0,4) :
-        x = -80
+        x = -126
         # create 5 stars in each row
         for star in range (0,5) :
             draw_star(x, y, 'white', star_size)
