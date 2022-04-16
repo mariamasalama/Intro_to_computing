@@ -1,6 +1,14 @@
 import turtle
 import time
 
+
+try:
+    main()
+except:
+    print("An exception occurred")
+finally:
+    print("Begin Final Project")
+
 # create a screen
 screen = turtle.getscreen()
 
@@ -18,23 +26,7 @@ t.penup()
 # decide the shape of turtle
 t.shape("turtle")
 
-# flag height to width ratio is 1:1.9
-flag_height = 337
-flag_length = 640
-
-# starting points
-# start from the first quardant, half of flag width and half of flag height
-start_x = -168
-start_y = 320
-
-# For red and white stripes (total 13 stripes in flag), each strip width will be flag_height/13 = 19.2 approx
-stripe_height = flag_height/13
-stripe_length = flag_length
-
-# length of one arm of star
-star_size = 10
-
-
+# Draws a rectangle given the length, height, and color
 def draw_rectangle(length, height, color):
     t.pendown()
     t.color(color)
@@ -50,6 +42,7 @@ def draw_rectangle(length, height, color):
     t.end_fill()
     t.penup()
 
+# Draws a star given its size and color
 def draw_star(size,color) :
     t.setheading(0)
     t.pendown()
@@ -63,19 +56,14 @@ def draw_star(size,color) :
     t.end_fill()
     t.penup()
     
-
-def get_color(color):
-    rgb = []
-    for i in (0, 2, 4):
-        rgb_value = int(color[i:i+2], 16)
-        rgb.append(rgb_value)
-    return tuple(rgb)
-
-
 # this function is used to create 13 red and white stripes of flag
 def draw_stripes():
-    x = start_x
-    y = start_y
+    x = -168
+    y = 320
+    flag_height = 337
+    flag_length = flag_height*1.9
+    stripe_height = flag_height/13
+    stripe_length = flag_length
     # we need to draw total 13 stripes, 7 red and 6 white
     # so we first create, 6 red and 6 white stripes alternatively
     for stripe in range(0,6):
@@ -96,15 +84,22 @@ def draw_stripes():
 # width = 0.76 * flag_height
 # check references section for these values
 def draw_square():
+    flag_height = 337
+    flag_length = flag_height*1.9
     square_height = (7/13) * flag_height
     square_length = (0.76) * flag_height
-    t.goto(start_x, start_y) 
+    stripe_height = flag_height/13
+    stripe_length = flag_length
+    t.goto(-168, 320) 
     draw_rectangle(square_length, square_height, '#0A3161')
 
 
-def draw_six_stars_rows():
+def draw_six_stars():
+    flag_height = 337
+    stripe_height = flag_height/13
     star_space = 40
     line_space = stripe_height + 10
+    star_size = 10
     y = 303
     # create 5 rows of stars
     for row in range(0,5) :
@@ -117,9 +112,12 @@ def draw_six_stars_rows():
         y = y - line_space
 
 
-def draw_five_stars_rows():
+def draw_five_stars():
+    flag_height = 337
+    stripe_height = flag_height/13
     star_space = 40
     line_space = stripe_height + 10
+    star_size = 10
     y = 288
     # create 4 rows of stars
     for row in range(0,4) :
@@ -130,18 +128,48 @@ def draw_five_stars_rows():
             draw_star(star_size, "#FFFFFF")
             x = x + star_space
         y = y - line_space
+        
+# Draws the flag with an outline of the stars and stripes inside
+def draw_flag(height):
+    start_x = -168
+    start_y = 320
+    flag_height = 337
+    flag_length = flag_height*1.9
+    draw_stripes()
+    draw_square()
+    draw_six_stars()
+    draw_five_stars()
+    t.goto(start_x, start_y)
+    t.pencolor("black")
+    t.pendown()
+    for i in range(2):
+        t.forward(flag_length)
+        t.right(90)
+        t.forward(height)
+        t.right(90)
+    t.penup()
+   
+# Calls the American Flag function and starts after 5 seconds.
+def main():
+    time.sleep(5)
+    draw_flag(337)
+    t.hideturtle()
+    # keep holding the screen until closed manually
+    screen.mainloop()
+    
+if __name__ == "__main__":
+    main()
 
-# start after 5 seconds.
-time.sleep(5)
-# draw 13 stripes
-draw_stripes()
-# draw squares to hold stars
-draw_square()
-# draw 30 stars, 6 * 5
-draw_six_stars_rows()
-# draw 20 stars, 5 * 4. total 50 stars representing 50 states of USA
-draw_five_stars_rows()
-# hide the cursor/turtle
-t.hideturtle()
-# keep holding the screen until closed manually
-screen.mainloop()
+# Returns the color in the form of an r, g, b, tuple
+def get_color(color):
+    rgb = []
+    if not type(color) is str:
+        raise Exception("Argument must be a string")
+    for i in (0, 2, 4):
+        rgb_value = int(color[i:i+2], 16)
+        rgb.append(rgb_value)
+    return tuple(rgb)
+get_color("FFFFFF")
+get_color("B22234")
+get_color("3C3B6E")
+get_color(4)
