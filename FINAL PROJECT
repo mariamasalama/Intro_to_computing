@@ -18,13 +18,13 @@ screen.bgcolor("white")
 # set title of screen
 screen.title("Final Project: American Flag")
 
-t = turtle.Turtle()
-# set the turtle speed.
-t.speed(100)
-t.penup()
-
-# decide the shape of turtle
-t.shape("turtle")
+#Sets a class "MyTurtle" to create the parameters for starting the project
+class MyTurtle(turtle.Turtle):
+    def __init__(self, pensize, speed, shape):
+        super().__init__(shape)
+        self.pensize(pensize)
+        self.speed(speed)
+t = MyTurtle(1, 100, "turtle")
 
 # Draws a rectangle given the length, height, and color
 def draw_rectangle(length, height, color):
