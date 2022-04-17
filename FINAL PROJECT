@@ -19,6 +19,7 @@ screen.bgcolor("white")
 screen.title("Final Project: American Flag")
 
 #Sets a class "MyTurtle" to create the parameters for starting the project
+# Turtle is a class of its own, so we can inherit some of the parameters
 class MyTurtle(turtle.Turtle):
     def __init__(self, pensize, speed, shape):
         super().__init__(shape)
