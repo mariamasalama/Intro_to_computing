@@ -18,8 +18,11 @@ screen.bgcolor("white")
 # set title of screen
 screen.title("Final Project: American Flag")
 
+# set the color mode to rgb
+screen.colormode(255)
+
 #Sets a class "MyTurtle" to create the parameters for starting the project
-# Turtle is a class of its own, so we can inherit some of the parameters
+# Turtle is a Python class of its own, so we can inherit some parameters
 class MyTurtle(turtle.Turtle):
     def __init__(self, pensize, speed, shape):
         super().__init__(shape)
@@ -32,14 +35,11 @@ def draw_rectangle(length, height, color):
     t.pendown()
     t.color(color)
     t.begin_fill()
-    t.forward(length)
-    t.right(90)
-    t.forward(height)
-    t.right(90)
-    t.forward(length)
-    t.right(90)
-    t.forward(height)
-    t.right(90)
+    for i in range(2):
+        t.forward(length)
+        t.right(90)
+        t.forward(height)
+        t.right(90)
     t.end_fill()
     t.penup()
 
@@ -56,19 +56,28 @@ def draw_star(size,color) :
         t.right(144)
     t.end_fill()
     t.penup()
+
+# Returns rgb colors from a color string, returned in the form of a dictionary 
+# Raises an exception if the color is not a string
+# rgb modes taken from the official Wikipedia page
+def get_color(color):
+    if not type(color) is str:
+        raise Exception("Argument must be a string")
+    colors = {'white': (255,255,255), 'black': (0,0,0), 'red': (179,25,66), 'blue': (10,49,97)}
+    return colors.get(color)
     
 # this function is used to create 13 red and white stripes of flag
 def draw_stripes():
-    x = -168
-    y = 320
     flag_height = 337
     flag_length = flag_height*1.9
     stripe_height = flag_height/13
     stripe_length = flag_length
+    x = -0.5*flag_length
+    y = flag_height/2
     # we need to draw total 13 stripes, 7 red and 6 white
     # so we first create, 6 red and 6 white stripes alternatively
     for stripe in range(0,6):
-        for color in ["#B31942", "#FFFFFF"]:
+        for color in [get_color('red'), get_color('white')]:
             t.goto(x,y)
             draw_rectangle(stripe_length, stripe_height, color)
             # decrease value of y by stripe_height
@@ -76,9 +85,8 @@ def draw_stripes():
 
     # create last red stripe
     t.goto(x,y)
-    draw_rectangle(stripe_length, stripe_height, '#B31942')
+    draw_rectangle(stripe_length, stripe_height, get_color('red'))
     y = y - stripe_height
-
 
 # this function create navy color square
 # height = 7/13 of flag_height
@@ -91,57 +99,71 @@ def draw_square():
     square_length = (0.76) * flag_height
     stripe_height = flag_height/13
     stripe_length = flag_length
-    t.goto(-168, 320) 
-    draw_rectangle(square_length, square_height, '#0A3161')
+    x = -0.5*flag_length
+    y = flag_height/2
+    t.goto(x,y) 
+    draw_rectangle(square_length, square_height, get_color('blue'))
 
 
+# A helper function to create 5 rows of 6 stars
 def draw_six_stars():
     flag_height = 337
+    flag_length = flag_height*1.9
     stripe_height = flag_height/13
-    star_space = 40
-    line_space = stripe_height + 10
-    star_size = 10
-    y = 303
+    square_height = (7/13) * flag_height
+    square_length = (0.76) * flag_height
+    star_space = square_length/6.5
+    line_space = square_height/5.3
+    star_size = stripe_height*0.5
+    y = flag_height/2
+    y2 = y - line_space/2 
+    x = -0.5*flag_length
     # create 5 rows of stars
     for row in range(0,5) :
-        x = -145
+        x2 = x + star_space/2
         # create 6 stars in each row
         for star in range (0,6) :
-            t.goto(x,y)
-            draw_star(star_size, '#FFFFFF')
-            x = x + star_space
-        y = y - line_space
+            t.goto(x2,y2)
+            draw_star(star_size, get_color('white'))
+            x2 = x2 + star_space
+        y2 = y2 - line_space
 
 
+# A helper function to create 4 rows of 5 stars
 def draw_five_stars():
     flag_height = 337
+    flag_length = flag_height*1.9
     stripe_height = flag_height/13
-    star_space = 40
-    line_space = stripe_height + 10
-    star_size = 10
-    y = 288
+    square_height = (7/13) * flag_height
+    square_length = (0.76) * flag_height
+    star_space = square_length/6.5
+    line_space = square_height/5.3
+    star_size = stripe_height*0.5
+    y = flag_height/2
+    y2 = y - line_space 
+    x = -0.5*flag_length
     # create 4 rows of stars
     for row in range(0,4) :
-        x = -126
+        x2 = x + star_space
         # create 5 stars in each row
         for star in range (0,5) :
-            t.goto(x,y)
-            draw_star(star_size, "#FFFFFF")
-            x = x + star_space
-        y = y - line_space
+            t.goto(x2,y2)
+            draw_star(star_size, get_color('white'))
+            x2 = x2 + star_space
+        y2 = y2 - line_space
         
 # Draws the flag with an outline of the stars and stripes inside
 def draw_flag(height):
-    start_x = -168
-    start_y = 320
     flag_height = 337
     flag_length = flag_height*1.9
     draw_stripes()
     draw_square()
     draw_six_stars()
     draw_five_stars()
-    t.goto(start_x, start_y)
-    t.pencolor("black")
+    x = -0.5*flag_length
+    y = flag_height/2
+    t.goto(x, y)
+    t.pencolor(get_color('black'))
     t.pendown()
     for i in range(2):
         t.forward(flag_length)
@@ -149,28 +171,15 @@ def draw_flag(height):
         t.forward(height)
         t.right(90)
     t.penup()
-   
+    
 # Calls the American Flag function and starts after 5 seconds.
 def main():
+    flag_height = 337
     time.sleep(5)
-    draw_flag(337)
+    draw_flag(flag_height)
     t.hideturtle()
     # keep holding the screen until closed manually
     screen.mainloop()
     
 if __name__ == "__main__":
     main()
-
-# Returns the color in the form of an r, g, b, tuple
-def get_color(color):
-    rgb = []
-    if not type(color) is str:
-        raise Exception("Argument must be a string")
-    for i in (0, 2, 4):
-        rgb_value = int(color[i:i+2], 16)
-        rgb.append(rgb_value)
-    return tuple(rgb)
-get_color("FFFFFF")
-get_color("B22234")
-get_color("3C3B6E")
-get_color(4)
