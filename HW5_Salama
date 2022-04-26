@@ -18,6 +18,7 @@ result <- matr1 %*% matr2
 #printing final result
 print("Resulting Matrix")
 print(result)
+
 #Question 2
 #create a data drame
 Data_frame1<-data.frame(
@@ -41,6 +42,7 @@ mylabel<-c("highest","lowest","median")
 colors<-c("red","green","blue")
 pie(x,col=colors,label=mylabel, main = "SALARIES")
 legend("bottomright",mylabel,fill=colors)
+
 #Question 3
 #choice 3
 #reading amazon datafile from blackboard
